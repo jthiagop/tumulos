@@ -67,8 +67,12 @@ jobs:
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
             cd ~/domains/tumulos.xyz/laravel_app
+            php artisan migrate --force
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
             php artisan cache:clear
-            echo "Cache cleared successfully!"
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            echo "Deployment finished successfully!"
