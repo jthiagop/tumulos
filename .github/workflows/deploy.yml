@@ -40,6 +40,8 @@ jobs:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONE ESTA LINHA
+
           port: ${{ secrets.SERVER_SSH_PORT }}
           source: "app,bootstrap,config,database,lang,resources,routes,storage,tests,vendor,artisan,composer.json,composer.lock" # Lista explícita de pastas/arquivos
           target: "~/domains/tumulos.xyz/laravel_app/"
@@ -51,6 +53,8 @@ jobs:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONE ESTA LINHA TAMBÉM
+
           port: ${{ secrets.SERVER_SSH_PORT }}
           source: "public/*" # O * garante que apenas o CONTEÚDO da pasta public seja enviado
           target: "~/domains/tumulos.xyz/public_html/"
