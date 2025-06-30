@@ -30,9 +30,6 @@ jobs:
       - name: Build Assets
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
-      # ========================================================================
-      # CORREÇÃO DEFINITIVA: Deploy via Rsync com Chave SSH
-      # ========================================================================
       - name: Deploy Application files
         uses: easingthemes/ssh-deploy@main
         with:
@@ -40,8 +37,9 @@ jobs:
           REMOTE_HOST: ${{ secrets.SERVER_SSH_HOST }}
           REMOTE_USER: ${{ secrets.SERVER_SSH_USERNAME }}
           REMOTE_PORT: ${{ secrets.SERVER_SSH_PORT }}
-          SOURCE: "/" # A raiz do projeto no runner
-          TARGET: "~/domains/tumulos.xyz/laravel_app/"
+          SOURCE: "/"
+          # CORREÇÃO APLICADA AQUI: Usando o caminho completo
+          TARGET: "/home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/laravel_app/"
           EXCLUDE: "/public/, /node_modules/, /.git/, /.github/"
 
       - name: Deploy Public folder
@@ -52,18 +50,18 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_SSH_USERNAME }}
           REMOTE_PORT: ${{ secrets.SERVER_SSH_PORT }}
           SOURCE: "public/"
-          TARGET: "~/domains/tumulos.xyz/public_html/"
-      # ========================================================================
+          # CORREÇÃO APLICADA AQUI: Usando o caminho completo
+          TARGET: "/home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/public_html/"
 
       - name: Run Final Commands on Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
-          password: ${{ secrets.SERVER_SSH_PASSWORD }} # ssh-action ainda pode usar senha para comandos
+          password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd ~/domains/tumulos.xyz/laravel_app
+            cd /home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/laravel_app
             php artisan migrate --force
             php artisan config:clear
             php artisan route:clear
