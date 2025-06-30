@@ -31,32 +31,29 @@ jobs:
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
       # ========================================================================
-      # CORREÇÃO: Usando uma nova ação de deploy que suporta SFTP
+      # CORREÇÃO APLICADA AQUI: Usando o nome correto da ação SFTP
       # ========================================================================
-      - name: Deploy Files via SFTP
-        uses: laryve/sftp-action@v2
+      - name: Deploy Application Files
+        uses: laryve/sftp-action-v2@2.0 # <-- Nome corrigido
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          user: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           
-          # Primeiro, enviamos a aplicação para a pasta 'laravel_app'
           local_path: ./
           remote_path: ~/domains/tumulos.xyz/laravel_app/
           
-          # Excluindo as pastas que não precisam ser enviadas
           exclude: .git*,.git*/**,node_modules/,public/,.env
 
-      - name: Deploy Public Folder via SFTP
-        uses: laryve/sftp-action@v2
+      - name: Deploy Public Folder Content
+        uses: laryve/sftp-action-v2@2.0 # <-- Nome corrigido
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          user: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           
-          # Agora, enviamos apenas o conteúdo da pasta 'public' para a 'public_html'
           local_path: ./public/
           remote_path: ~/domains/tumulos.xyz/public_html/
       # ========================================================================
