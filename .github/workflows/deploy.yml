@@ -1,52 +1,43 @@
-  - name: Build assets
-    run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 name: Deploy Laravel to Hostinger
 
 on:
   push:
     branches:
-      - main  # O deploy será acionado quando você fizer um push para a branch 'main'
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixa o código do seu repositório
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Configura o PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Use a mesma versão do seu servidor Hostinger
+          php-version: '8.2'
 
-      # 3. Instala as dependências do Composer
-      - name: Install Composer dependencies
+      - name: Install Composer Dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      # 4. Configura Node.js e compila os assets
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use uma versão LTS
-      - name: Install NPM dependencies
+          node-version: '18'
+      - name: Install NPM Dependencies
         run: npm install
-
-      # 5. Build assets (AQUI ESTÁ A LINHA CORRIGIDA, DENTRO DA ESTRUTURA CORRETA)
-      - name: Build assets
+      - name: Build Assets
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
-      # 6. Faz o deploy dos arquivos da aplicação (exceto a pasta public)
-      - name: Deploy application files
+      - name: Deploy Application Files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          protocol: sftp 
+          protocol: sftp
           local-dir: ./
           server-dir: ~/domains/tumulos.xyz/laravel_app/
           exclude: |
@@ -56,8 +47,7 @@ jobs:
             .env
             public/
 
-      # 7. Faz o deploy do conteúdo da pasta 'public' para a 'public_html'
-      - name: Deploy public folder content
+      - name: Deploy Public Folder Content
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.SERVER_SSH_HOST }}
@@ -67,9 +57,8 @@ jobs:
           protocol: sftp
           local-dir: ./public/
           server-dir: ~/domains/tumulos.xyz/public_html/
-          
-      # 8. Executa os comandos finais no servidor via SSH
-      - name: Run final commands on server
+
+      - name: Run Final Commands on Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
@@ -81,7 +70,5 @@ jobs:
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-            echo "Deployment finished successfully!"
+            php artisan cache:clear
+            echo "Cache cleared successfully!"
