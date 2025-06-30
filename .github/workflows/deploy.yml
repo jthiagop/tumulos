@@ -30,44 +30,45 @@ jobs:
       - name: Build Assets
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
-      - name: Deploy Application files
-        uses: easingthemes/ssh-deploy@main
+      # ========================================================================
+      # CORREÇÃO DEFINITIVA: Usando appleboy/scp-action para o deploy
+      # ========================================================================
+      - name: Deploy All Files via SCP
+        uses: appleboy/scp-action@v1.0.3
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SERVER_SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SERVER_SSH_USERNAME }}
-          REMOTE_PORT: ${{ secrets.SERVER_SSH_PORT }}
-          SOURCE: "/"
-          # CORREÇÃO APLICADA AQUI: Usando o caminho completo
-          TARGET: "/home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/laravel_app/"
-          EXCLUDE: "/public/, /node_modules/, /.git/, /.github/"
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          source: "." # Envia tudo do diretório atual
+          target: "~/domains/tumulos.xyz/" # Envia para a pasta do domínio
+          strip_components: 1 # Remove o primeiro nível de diretório do source
 
-      - name: Deploy Public folder
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SERVER_SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SERVER_SSH_USERNAME }}
-          REMOTE_PORT: ${{ secrets.SERVER_SSH_PORT }}
-          SOURCE: "public/"
-          # CORREÇÃO APLICADA AQUI: Usando o caminho completo
-          TARGET: "/home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/public_html/"
+      # ========================================================================
 
       - name: Run Final Commands on Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
-          password: ${{ secrets.SERVER_SSH_PASSWORD }}
+          password: ${{ secrets.SERVER_SSH_PASSWORD }} # ssh-action para comandos ainda pode usar senha
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd /home/${{ secrets.SERVER_SSH_USERNAME }}/domains/tumulos.xyz/laravel_app
-            php artisan migrate --force
+            # Navega para a pasta da aplicação
+            cd ~/domains/tumulos.xyz/laravel_app
+            
+            # Limpa caches antigos antes de rodar os comandos principais
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
             php artisan cache:clear
+            
+            # Roda a migração do banco de dados
+            php artisan migrate --force
+            
+            # Recria os caches de otimização
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
+            
             echo "Deployment finished successfully!"
