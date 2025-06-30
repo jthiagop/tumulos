@@ -30,33 +30,36 @@ jobs:
       - name: Build Assets
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
-      - name: Deploy Application Files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      # ========================================================================
+      # CORREÇÃO: Usando uma nova ação de deploy que suporta SFTP
+      # ========================================================================
+      - name: Deploy Files via SFTP
+        uses: laryve/sftp-action@v2
         with:
-          server: ${{ secrets.SERVER_SSH_HOST }}
+          host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          protocol: sftp
-          local-dir: ./
-          server-dir: ~/domains/tumulos.xyz/laravel_app/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            .env
-            public/
+          
+          # Primeiro, enviamos a aplicação para a pasta 'laravel_app'
+          local_path: ./
+          remote_path: ~/domains/tumulos.xyz/laravel_app/
+          
+          # Excluindo as pastas que não precisam ser enviadas
+          exclude: .git*,.git*/**,node_modules/,public/,.env
 
-      - name: Deploy Public Folder Content
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy Public Folder via SFTP
+        uses: laryve/sftp-action@v2
         with:
-          server: ${{ secrets.SERVER_SSH_HOST }}
+          host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          protocol: sftp
-          local-dir: ./public/
-          server-dir: ~/domains/tumulos.xyz/public_html/
+          
+          # Agora, enviamos apenas o conteúdo da pasta 'public' para a 'public_html'
+          local_path: ./public/
+          remote_path: ~/domains/tumulos.xyz/public_html/
+      # ========================================================================
 
       - name: Run Final Commands on Server
         uses: appleboy/ssh-action@master
