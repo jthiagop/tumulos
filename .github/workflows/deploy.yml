@@ -31,18 +31,30 @@ jobs:
         run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
 
       # ========================================================================
-      # CORREÇÃO DEFINITIVA: Usando appleboy/scp-action para o deploy
+      # CORREÇÃO DEFINITIVA: Usando appleboy/scp-action com a versão correta
+      # e uma abordagem de deploy explícita.
       # ========================================================================
-      - name: Deploy All Files via SCP
-        uses: appleboy/scp-action@v1.0.3
+      - name: Deploy Application Files
+        uses: appleboy/scp-action@v0.1.5 # <-- Versão correta
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
-          source: "." # Envia tudo do diretório atual
-          target: "~/domains/tumulos.xyz/" # Envia para a pasta do domínio
-          strip_components: 1 # Remove o primeiro nível de diretório do source
+          source: "app,bootstrap,config,database,lang,resources,routes,storage,tests,vendor,artisan,composer.json,composer.lock" # Lista explícita de pastas/arquivos
+          target: "~/domains/tumulos.xyz/laravel_app/"
+          rm: true # Remove a pasta de destino antes de copiar para garantir uma instalação limpa
+
+      - name: Deploy Public Folder Content
+        uses: appleboy/scp-action@v0.1.5 # <-- Versão correta
+        with:
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          source: "public/*" # O * garante que apenas o CONTEÚDO da pasta public seja enviado
+          target: "~/domains/tumulos.xyz/public_html/"
+          rm: true # Remove a pasta de destino antes de copiar
 
       # ========================================================================
 
@@ -51,24 +63,16 @@ jobs:
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
-          password: ${{ secrets.SERVER_SSH_PASSWORD }} # ssh-action para comandos ainda pode usar senha
+          password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            # Navega para a pasta da aplicação
             cd ~/domains/tumulos.xyz/laravel_app
-            
-            # Limpa caches antigos antes de rodar os comandos principais
+            php artisan migrate --force
             php artisan config:clear
             php artisan route:clear
             php artisan view:clear
             php artisan cache:clear
-            
-            # Roda a migração do banco de dados
-            php artisan migrate --force
-            
-            # Recria os caches de otimização
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            
             echo "Deployment finished successfully!"
