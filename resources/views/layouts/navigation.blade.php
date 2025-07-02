@@ -159,7 +159,7 @@
                                                     <!--begin:Menu item-->
                                                     <div class="menu-item p-0 m-0">
                                                         <!--begin:Menu link-->
-                                                        <a href="dashboards/ecommerce.html" class="menu-link">
+                                                        <a href="{{ route('pagamentos.index') }}" class="menu-link">
                                                             <span
                                                                 class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
                                                                 <i class="ki-outline ki-dollar text-info fs-1"></i>
