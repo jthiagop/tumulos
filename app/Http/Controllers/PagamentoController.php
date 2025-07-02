@@ -6,6 +6,7 @@ use App\Http\Requests\StorePagamentoRequest;
 use App\Http\Requests\UpdatePagamentoRequest;
 use App\Models\Pagamento;
 use App\Models\Tumulo;
+use Exception;
 use Illuminate\Http\Request;
 
 class PagamentoController extends Controller
@@ -110,11 +111,36 @@ class PagamentoController extends Controller
         return view('pagamentos.comprovante', compact('pagamento'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pagamento $pagamento)
     {
-        //
+        // O try...catch é uma boa prática para capturar qualquer erro inesperado
+        // que possa acontecer durante a exclusão no banco de dados.
+        try {
+            
+            // Este é o comando que efetivamente exclui o registro.
+            // Se o seu modelo Pagamento usa a trait 'SoftDeletes',
+            // este comando vai apenas definir a data em 'deleted_at',
+            // movendo o item para a lixeira.
+            $pagamento->delete();
+
+            // Retorna uma resposta de sucesso em formato JSON,
+            // que o nosso JavaScript vai entender.
+            return response()->json([
+                'success' => true,
+                'message' => 'Pagamento movido para a lixeira com sucesso!'
+            ]);
+
+        } catch (Exception $e) {
+            
+            // Em caso de erro, retorna uma resposta de falha com status 500
+            // e uma mensagem de erro para o JavaScript.
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro ao excluir o pagamento.'
+            ], 500);
+            
+            // Para depuração, você pode querer logar o erro real:
+            // Log::error($e->getMessage());
+        }
     }
 }

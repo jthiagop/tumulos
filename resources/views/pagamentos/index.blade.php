@@ -122,14 +122,30 @@
                                                     <i class="ki-outline ki-setting-3 fs-3"></i>
                                                 </a>
                                                 <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                                                    data-kt-permissions-table-filter="delete_row">
+                                                    data-kt-permissions-table-filter="delete_row"
+                                                    data-url-destroy="{{ route('pagamentos.destroy', $pagamento) }}"
+                                                    data-pagamento-descricao="{{ $pagamento->descricao }}">
                                                     <i class="ki-outline ki-trash fs-3"></i>
                                                 </button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" class="text-center p-4">Nenhum pagamento registrado.</td>
+
+                                            <td></td>
+                                            <td colspan="9" class="text-center py-10">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <i class="bi bi-database-exclamation fs-2hx text-muted mb-4"></i>
+                                                    <h4 class="text-gray-700 fw-bold">Nenhum registro encontrado</h4>
+                                                    <p class="text-muted">Não há sepultamentos pagamentos no sistema
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -162,7 +178,7 @@
 <script src="assets/js/custom/utilities/modals/new-target.js"></script>
 <!--begin::Vendors Javascript(used for this page only)-->
 <!--begin::Custom Javascript(used for this page only)-->
-<script src="assets/js/custom/apps/user-management/permissions/list.js"></script>
+<script src="assets/js/custom/apps/pagamento/list.js"></script>
 
 <!--end::Custom Javascript-->
 <!--end::Javascript-->

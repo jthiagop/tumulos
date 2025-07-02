@@ -2,16 +2,29 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <title>{{ config('app.surname', 'Laravel') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Sistema completo para o gerenciamento de cemitérios. Controle túmulos, registros de falecidos, pagamentos e visualize dados importantes em um dashboard analítico e moderno." />
+    <meta name="keywords"
+        content="gestão de cemitério, sistema para cemitério, gerenciamento de túmulos, controle de sepulturas, software cemiterial, administração de cemitérios, pagamentos de manutenção, registro de falecidos" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tumulos - Sistema de Gerenciamento de Cemitério" />
+    <meta property="og:description"
+        content="Plataforma online para administração eficiente de túmulos, registros e finanças cemiteriais." />
+    <meta property="og:url" content="https://tumulos.xyz" />
+    <meta property="og:site_name" content="Tumulos" />
+    <link rel="canonical" href="https://tumulos.xyz" />
 
-    <title>{{ config('app.surname', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-		<link rel="shortcut icon" href="assets/media/logos/logo.ico" />
+    <link rel="shortcut icon" href="assets/media/logos/logo.ico" />
 
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
