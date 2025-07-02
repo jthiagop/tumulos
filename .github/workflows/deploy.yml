@@ -1,4 +1,4 @@
-name: Deploy Laravel to Hostinger via SSH
+name: Deploy to VPS
 
 on:
   push:
@@ -10,73 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Install Composer Dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install NPM Dependencies
-        run: npm install
-      - name: Build Assets
-        run: NODE_OPTIONS=--max-old-space-size=4096 npm run build
-
-      # ========================================================================
-      # CORREÇÃO DEFINITIVA: Usando appleboy/scp-action com a versão correta
-      # e uma abordagem de deploy explícita.
-      # ========================================================================
-      - name: Deploy Application Files
-        uses: appleboy/scp-action@v0.1.5 # <-- Versão correta
-        with:
-          host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONE ESTA LINHA
-
-          port: ${{ secrets.SERVER_SSH_PORT }}
-          source: "app,bootstrap,config,database,lang,resources,routes,storage,tests,vendor,artisan,composer.json,composer.lock" # Lista explícita de pastas/arquivos
-          target: "~/domains/tumulos.xyz/laravel_app/"
-          rm: true # Remove a pasta de destino antes de copiar para garantir uma instalação limpa
-
-      - name: Deploy Public Folder Content
-        uses: appleboy/scp-action@v0.1.5 # <-- Versão correta
-        with:
-          host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }} # <-- ADICIONE ESTA LINHA TAMBÉM
-
-          port: ${{ secrets.SERVER_SSH_PORT }}
-          source: "public/." # O * garante que apenas o CONTEÚDO da pasta public seja enviado
-          target: "~/domains/tumulos.xyz/public_html/"
-          rm: true # Remove a pasta de destino antes de copiar
-
-      # ========================================================================
-
-      - name: Run Final Commands on Server
+      - name: Run deploy script on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_SSH_HOST }}
           username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           password: ${{ secrets.SERVER_SSH_PASSWORD }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd ~/domains/tumulos.xyz/laravel_app
-            php artisan migrate --force
-            php artisan config:clear
-            php artisan route:clear
-            php artisan view:clear
-            php artisan cache:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-            echo "Deployment finished successfully!"
+            cd /var/www/tumulos
+            ./deploy.sh
