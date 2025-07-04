@@ -24,6 +24,7 @@ class Tumulo extends Model
         'localizacao_detalhada',
         'codigo', // <-- ADICIONADO
         'tags',   // <-- ADICIONADO
+        'local'
     ];
 
     /**

@@ -108,7 +108,7 @@ class PessoaFalecidaController extends Controller
     public function show($id)
     {
         // Carrega com eager loading para evitar N+1 queries
-        $falecido = PessoaFalecida::with(['tumulo.quadra', 'sepultamento'])
+        $falecido = PessoaFalecida::with(['sepultamento'])
             ->findOrFail($id);
 
         return view('falecidos.show', [
@@ -153,7 +153,7 @@ class PessoaFalecidaController extends Controller
 
         $falecido->update($validatedData);
 
-        return redirect()->route('falecidos.show', $falecido)
+        return redirect()->route('falecidos.index', $falecido)
             ->with('success', 'Cadastro atualizado com sucesso!');
     }
 

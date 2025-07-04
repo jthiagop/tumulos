@@ -28,6 +28,8 @@ class StoreTumulosRequest extends FormRequest
             'codigo' => 'required|string|max:100|unique:tumulos,codigo',
             'status' => 'required|string|in:Disponível,Ocupado,Reservado,Em Manutenção',
             'tags' => 'nullable|string',
+            'local' => 'nullable|string',
+
         ];
     }
 
@@ -48,20 +50,20 @@ class StoreTumulosRequest extends FormRequest
 
             // Mensagens específicas por campo
             'quadra.max' => 'A quadra não pode ter mais que 255 caracteres.',
-            
+
             'rua.max' => 'A rua não pode ter mais que 255 caracteres.',
-            
+
             'numero.integer' => 'O número deve ser um valor inteiro.',
             'numero.min' => 'O número deve ser pelo menos 1.',
-            
+
             'tipo.in' => 'O tipo deve ser Cova Simples, Jazigo ou Gaveta.',
-            
+
             'localizacao_detalhada.max' => 'A localização detalhada não pode ter mais que 500 caracteres.',
-            
+
             'codigo.required' => 'O código do túmulo é obrigatório.',
             'codigo.max' => 'O código não pode ter mais que 100 caracteres.',
             'codigo.unique' => 'Este código de túmulo já está em uso.',
-            
+
             'status.required' => 'O status do túmulo é obrigatório.',
             'status.in' => 'O status deve ser: Disponível, Ocupado, Reservado ou Em Manutenção.',
         ];

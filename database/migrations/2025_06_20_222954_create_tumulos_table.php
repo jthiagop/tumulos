@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('numero', 20);
             $table->string('tipo')->comment('Ex: Jazigo, Gaveta, Cova Simples');
             $table->string('status')->default('Disponível')->comment('Ex: Disponível, Ocupado, Reservado');
+            $table->string('local')->comment('Santa Rita, São José ou Basílica da Penha');
             $table->text('localizacao_detalhada')->nullable();
             $table->json('tags')->nullable()->comment('Tags para categorização em formato JSON');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

@@ -149,43 +149,118 @@
                                             <x-input-error :messages="$errors->get('localizacao_detalhada')" class="mt-2" />
                                         </div>
 
-                                        <div class="row g-9 mb-8">
-                                            <!--begin::Col-->
-                                            <div class="col-md-8 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                    <span class="required">Tags</span>
-                                                    <span class="ms-1" data-bs-toggle="tooltip"
-                                                        title="Adicione tags para melhor organização">
-                                                        <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
-                                                    </span>
+<div class="row g-9 mb-8">
+    <!-- Tags Input -->
+    <div class="col-md-4 fv-row">
+        <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="kt_ecommerce_add_product_tags">
+            <span class="required">Tags</span>
+            <span class="ms-1" data-bs-toggle="tooltip" title="Adicione tags para melhor organização">
+                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+            </span>
+        </label>
+        <input id="kt_ecommerce_add_product_tags" class="form-control form-control-solid" name="tags"
+               value="{{ old('tags', $tumulo->tags) }}" placeholder="Ex: familiar, histórico, religioso" />
+        <div class="text-muted fs-7">Separe múltiplas tags com vírgulas</div>
+        <x-input-error :messages="$errors->get('tags')" class="mt-2" />
+    </div>
 
-                                                </label>
-                                                <!--end::Label-->
-                                                <input id="kt_ecommerce_add_product_tags" class="form-control form-control-solid" name="tags"
-                                                    value="{{ old('tags', $tumulo->tags) }}" />
-                                                <div class="text-muted fs-7">Adicione tags a um tumulo.</div>
+    <!-- Tipo do Túmulo Select -->
+    <div class="col-md-4 fv-row">
+        <label class="fs-6 fw-semibold mb-2" for="tipo_tumulo">Tipo do Túmulo</label>
+        <select id="tipo_tumulo" class="form-select form-select-solid" data-control="select2"
+                data-hide-search="true" name="tipo" required>
+            <option disabled value="">Escolha o Tipo</option>
+            @foreach ($tiposTumulo as $tipo)
+                <option value="{{ $tipo }}"
+                    {{ old('tipo', $tumulo->tipo) == $tipo ? 'selected' : '' }}>
+                    {{ $tipo }}
+                </option>
+            @endforeach
+        </select>
+        <x-input-error :messages="$errors->get('tipo')" class="mt-2" />
+    </div>
 
-                                                <x-input-error :messages="$errors->get('tags')" class="mt-2" />
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Col - Tipo-->
-                                            <div class="col-md-4 fv-row">
-                                                <label class="fs-6 fw-semibold mb-2">Tipo do Túmulo</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                    data-hide-search="true" aria-placeholder="escolha um " name="tipo">
-                                                    <option disabled value="">Escolha o Tipo</option>
-                                                    @foreach ($tiposTumulo as $tipo)
-                                                        <option value="{{ $tipo }}"
-                                                            {{ old('tipo', $tumulo->tipo) == $tipo ? 'selected' : '' }}>
-                                                            {{ $tipo }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <x-input-error :messages="$errors->get('tipo')" class="mt-2" />
-                                            </div>
-                                        </div>
+    <!-- Local do Jazigo Radio Buttons -->
+    <div class="col-md-4 fv-row">
+        <fieldset>
+            <legend class="form-label d-block mb-3 fs-6 fw-semibold">Local do Jazigo:</legend>
+            
+            <div class="d-flex flex-wrap gap-3">
+                <!-- Basílica da Penha -->
+                <div class="form-check form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" name="local" 
+                           value="Basílica da Penha" id="basilica_penha" 
+                           {{ old('local', $tumulo->local) == 'Basílica da Penha' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="basilica_penha">
+                        Basílica da Penha
+                    </label>
+                </div>
+                
+                <!-- Santa Rita -->
+                <div class="form-check form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" name="local" 
+                           value="Santa Rita" id="santa_rita" 
+                           {{ old('local', $tumulo->local) == 'Santa Rita' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="santa_rita">
+                        Santa Rita
+                    </label>
+                </div>
+                
+                <!-- São José -->
+                <div class="form-check form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" name="local" 
+                           value="São José" id="sao_jose" 
+                           {{ old('local', $tumulo->local) == 'São José' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="sao_jose">
+                        São José
+                    </label>
+                </div>
+                
+                <!-- Outro -->
+                <div class="form-check form-check-custom form-check-solid">
+                    <input class="form-check-input" type="radio" name="local" 
+                           value="Outro" id="outro_local" 
+                           {{ old('local', $tumulo->local) == 'Outro' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="outro_local">
+                        Outro
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Campo para localização detalhada -->
+            <div id="localizacao_detalhada_container" class="mt-3" 
+                 style="{{ (old('local', $tumulo->local) == 'Outro') ? 'display: block;' : 'display: none;' }}">
+                <label for="localizacao_detalhada" class="form-label">Especifique o local:</label>
+                <input type="text" id="localizacao_detalhada" name="localizacao_detalhada" 
+                       class="form-control form-control-solid" 
+                       value="{{ old('localizacao_detalhada', $tumulo->localizacao_detalhada) }}" />
+                <x-input-error :messages="$errors->get('localizacao_detalhada')" class="mt-2" />
+            </div>
+            
+            @error('local')
+                <div class="fv-plugins-message-container invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </fieldset>
+    </div>
+</div>
 
+@push('scripts')
+<script>
+    // Mostra/oculta campo de localização detalhada baseado na seleção
+    document.querySelectorAll('input[name="local"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const detalhesContainer = document.getElementById('localizacao_detalhada_container');
+            detalhesContainer.style.display = this.value === 'Outro' ? 'block' : 'none';
+            
+            if (this.value !== 'Outro') {
+                document.getElementById('localizacao_detalhada').value = '';
+            }
+        });
+    });
+</script>
+@endpush
                                         <!--begin::Actions-->
                                         <div class="text-center">
                                             <a href="{{ route('tumulos.index') }}" type="reset"

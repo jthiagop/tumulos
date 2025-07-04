@@ -24,8 +24,8 @@ public function index()
         return redirect()->route('login');
     }
 
-    // Obtém o tipo de usuário corretamente (corrigido 'suertype' para 'usertype')
-    $userType = auth()->user()->suertype;
+    // Obtém o tipo de usuário corretamente (corrigido 'usertype' para 'usertype')
+    $userType = auth()->user()->usertype;
 
     // Verifica se é admin
     if ($userType == 'admin') {

@@ -160,42 +160,133 @@
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="row g-9 mb-8">
-                                            <!--begin::Col-->
-                                            <div class="col-md-8 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                            <!-- Tags Input -->
+                                            <div class="col-md-4 fv-row">
+                                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2"
+                                                    for="kt_ecommerce_add_product_tags">
                                                     <span class="required">Tags</span>
                                                     <span class="ms-1" data-bs-toggle="tooltip"
                                                         title="Adicione tags para melhor organização">
                                                         <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
                                                     </span>
-
                                                 </label>
-                                                <!--end::Label-->
                                                 <input id="kt_ecommerce_add_product_tags" name="tags"
-                                                    class="form-control form-control-solid" value="ossuário, frade" />
-                                                <div class="text-muted fs-7">Adicione tags a um tumulo.</div>
-
+                                                    class="form-control form-control-solid" value="ossuário, frade"
+                                                    placeholder="Ex: familiar, histórico, religioso" />
+                                                <div class="text-muted fs-7">Separe múltiplas tags com vírgulas</div>
                                                 <x-input-error :messages="$errors->get('tags')" class="mt-2" />
                                             </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Col-->
-                                            <div class="col-md-4 fv-row">
-                                                <label class="fs-6 fw-semibold mb-2">Tipo do Túmulo</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
-                                                    data-hide-search="true" data-placeholder="Qual o Tipo?"
-                                                    name="tipo">
+
+                                            <!-- Tipo do Túmulo Select -->
+                                            <div class="col-md-3 fv-row">
+                                                <label class="fs-6 fw-semibold mb-2" for="tipo_tumulo">Tipo do
+                                                    Túmulo</label>
+                                                <select id="tipo_tumulo" class="form-select form-select-solid"
+                                                    data-control="select2" data-hide-search="true"
+                                                    data-placeholder="Qual o Tipo?" name="tipo" required>
                                                     <option value="">Escolha o Tipo</option>
-                                                    <option value="Jazigo">Jazigo</option>
-                                                    <option value="Gaveta">Gaveta</option>
-                                                    <option value="Cova Simples">Cova Simples</option>
+                                                    <option value="Jazigo"
+                                                        {{ old('tipo') == 'Jazigo' ? 'selected' : '' }}>Jazigo</option>
+                                                    <option value="Gaveta"
+                                                        {{ old('tipo') == 'Gaveta' ? 'selected' : '' }}>Gaveta</option>
+                                                    <option value="Cova Simples"
+                                                        {{ old('tipo') == 'Cova Simples' ? 'selected' : '' }}>Cova
+                                                        Simples</option>
+                                                    <option value="Mausoléu"
+                                                        {{ old('tipo') == 'Mausoléu' ? 'selected' : '' }}>Mausoléu
+                                                    </option>
                                                 </select>
                                                 <x-input-error :messages="$errors->get('tipo')" class="mt-2" />
-
                                             </div>
-                                            <!--end::Col-->
+
+                                            <!-- Local do Jazigo Radio Buttons -->
+                                            <div class="col-md-5 fv-row">
+                                                <fieldset>
+                                                    <legend class="form-label d-block mb-3 fs-6 fw-semibold">Local do
+                                                        Jazigo:</legend>
+
+                                                    <div class="d-flex flex-wrap gap-5">
+                                                        <!-- Basílica da Penha -->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="local" value="Basílica da Penha"
+                                                                id="basilica_penha"
+                                                                {{ old('local', 'Santa Rita') == 'Basílica da Penha' ? 'checked' : '' }} />
+                                                            <label class="form-check-label" for="basilica_penha">
+                                                                Basílica da Penha
+                                                            </label>
+                                                        </div>
+
+                                                        <!-- Santa Rita -->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="local" value="Santa Rita" id="santa_rita"
+                                                                {{ old('local', 'Santa Rita') == 'Santa Rita' ? 'checked' : '' }} />
+                                                            <label class="form-check-label" for="santa_rita">
+                                                                Santa Rita
+                                                            </label>
+                                                        </div>
+
+                                                        <!-- São José -->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="local" value="São José" id="sao_jose"
+                                                                {{ old('local', 'Santa Rita') == 'São José' ? 'checked' : '' }} />
+                                                            <label class="form-check-label" for="sao_jose">
+                                                                São José
+                                                            </label>
+                                                        </div>
+
+                                                        <!-- Outro -->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="local" value="Outro" id="outro_local"
+                                                                {{ old('local', 'Santa Rita') == 'Outro' ? 'checked' : '' }} />
+                                                            <label class="form-check-label" for="outro_local">
+                                                                Outro
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Campo para localização detalhada (aparece apenas se "Outro" for selecionado) -->
+                                                    <div id="localizacao_detalhada_container" class="mt-3"
+                                                        style="display: none;">
+                                                        <label for="localizacao_detalhada"
+                                                            class="form-label">Especifique o local:</label>
+                                                        <input type="text" id="localizacao_detalhada"
+                                                            name="localizacao_detalhada"
+                                                            class="form-control form-control-solid"
+                                                            value="{{ old('localizacao_detalhada') }}" />
+                                                        <x-input-error :messages="$errors->get('localizacao_detalhada')" class="mt-2" />
+                                                    </div>
+
+                                                    @error('local')
+                                                        <div class="fv-plugins-message-container invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </fieldset>
+                                            </div>
                                         </div>
-                                        <!--begin::Actions-->
+
+                                        @push('scripts')
+                                            <script>
+                                                // Mostra/oculta campo de localização detalhada baseado na seleção
+                                                document.querySelectorAll('input[name="local"]').forEach(radio => {
+                                                    radio.addEventListener('change', function() {
+                                                        const detalhesContainer = document.getElementById('localizacao_detalhada_container');
+                                                        detalhesContainer.style.display = this.value === 'Outro' ? 'block' : 'none';
+
+                                                        if (this.value !== 'Outro') {
+                                                            document.getElementById('localizacao_detalhada').value = '';
+                                                        }
+                                                    });
+                                                });
+
+                                                // Dispara o evento change para verificar o estado inicial
+                                                document.querySelector('input[name="local"]:checked').dispatchEvent(new Event('change'));
+                                            </script>
+                                        @endpush
                                         <div class="text-center">
                                             <a href="{{ route('tumulos.index') }}" type="reset"
                                                 id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</a>
@@ -236,4 +327,3 @@
 
 <!--begin::Custom Javascript(used for this page only)-->
 <script src="/assets/js/widgets.bundle.js"></script>
-

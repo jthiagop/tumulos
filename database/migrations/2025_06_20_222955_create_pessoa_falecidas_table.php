@@ -30,8 +30,10 @@ return new class extends Migration
             $table->text('descricao')->nullable()->comment('Uma breve biografia ou descrição');
             $table->json('tags')->nullable()->comment('Tags para busca e categorização em formato JSON');
 
-            // --- Colunas do Responsável ---
+            // --- Colunas do Responsável ---  
+
             $table->string('nome_responsavel')->nullable();
+            $table->string('endereco_responsavel')->nullable();
             $table->string('telefone_responsavel')->nullable();
             $table->string('email')->nullable()->unique()->comment('Email de contato do responsável ou do falecido');
 

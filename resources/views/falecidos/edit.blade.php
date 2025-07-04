@@ -265,7 +265,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="col-md-4 fv-row">
-                                                    <label class="required form-label">Data de Falecimento</label>
+                                                    <label class=" form-label">Data de Falecimento</label>
                                                     <input class="form-control" name="data_falecimento"
                                                         placeholder="Selecione a data" id="kt_datepicker_falecimento"
                                                         value="{{ old('data_falecimento', $falecido->data_falecimento ? $falecido->data_falecimento->format('Y-m-d') : '') }}" />
@@ -333,7 +333,7 @@
                                             @if (isset($falecido->data_nascimento))
                                                 <input id="kt_datepicker_sepultamento" class="form-control"
                                                     name="data_nascimento"
-                                                    value="{{ old('data_nascimento', $falecido->data_nascimento->format('Y-m-d')) }}" />
+                                                    value="{{ old('data_nascimento', $falecido->data_sepultamento->format('Y-m-d')) }}" />
                                             @else
                                                 <input id="kt_datepicker_sepultamento" class="form-control"
                                                     name="data_nascimento" value="{{ old('data_nascimento') }}" />

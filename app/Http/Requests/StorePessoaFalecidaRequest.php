@@ -22,14 +22,15 @@ class StorePessoaFalecidaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome_completo'      => 'required|string|max:255',
+            'nome_completo'      => 'nullable|string|max:255',
             'foto'               => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'cpf'                => 'nullable|string|max:14|unique:pessoa_falecidas,cpf',
-            'data_nascimento'    => 'required|date',
+            'data_nascimento'    => 'nullable|date',
             'status_social'      => 'nullable|string|max:50',
-            'data_falecimento'   => 'required|date',
+            'data_falecimento'   => 'nullable|date',
             'causa_morte'        => 'nullable|string|max:255',
             'descricao'          => 'nullable|string',
+            'endereco_responsavel'=> 'nullable|string',
             'tags'               => 'nullable|string',
             'nome_responsavel'   => 'nullable|string|max:255',
             'telefone_responsavel' => 'nullable|string|max:20',

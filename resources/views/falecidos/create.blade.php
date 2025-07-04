@@ -186,8 +186,8 @@
                                     <label class="form-label d-block">Tags</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input id="kt_ecommerce_add_product_tags"
-                                        class="form-control mb-2" value=""  name="tags"/>
+                                    <input id="kt_ecommerce_add_product_tags" class="form-control mb-2" value=""
+                                        name="tags" />
                                     <!--end::Input-->
                                     <!--begin::Description-->
                                     <div class="text-muted fs-7">Adicione Tags ao falecido.</div>
@@ -210,82 +210,77 @@
                                     <!--begin::General options-->
                                     <div class="card card-flush py-4">
                                         <!--begin::Card body-->
-                                            <div class="card-header">
-                                                <div class="card-title">
-                                                    <h2>Informações Gerais</h2>
-                                                </div>
-                                            </div>
-                                            <div class="card-body pt-0">
-                                                <div class="mb-10 fv-row">
-                                                    <label class="required form-label">Nome Completo do
-                                                        Falecido</label>
-                                                    <input type="text" class="form-control mb-2"
-                                                        name="nome_completo" placeholder="Nome e Sobrenome"
-                                                        value="{{ old('nome_completo') }}" />
-                                                    @error('nome_completo')
-                                                        <div class="fv-plugins-message-container invalid-feedback fs-7">
-                                                            {{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="mb-10">
-                                                    <label class="form-label">Descrição / Biografia</label>
-                                                    <textarea class="form-control" name="descricao" rows="4"
-                                                        placeholder="Uma breve biografia ou detalhes importantes">{{ old('descricao') }}</textarea>
-                                                </div>
-
-                                                <div class="row g-9 mb-10">
-                                                    <div class="col-md-4 fv-row">
-                                                        <label class="form-label">Data de Nascimento</label>
-                                                        <input class="form-control" name="data_nascimento"
-                                                            placeholder="Selecione a data"
-                                                            id="kt_datepicker_nascimento"
-                                                            value="{{ old('data_nascimento') }}" />
-                                                        @error('data_nascimento')
-                                                            <div
-                                                                class="fv-plugins-message-container invalid-feedback fs-7">
-                                                                {{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-md-4 fv-row">
-                                                        <label class="required form-label">Data de Falecimento</label>
-                                                        <input class="form-control" name="data_falecimento"
-                                                            placeholder="Selecione a data"
-                                                            id="kt_datepicker_falecimento" 
-                                                            value="{{ old('data_falecimento') }}" />
-                                                        @error('data_falecimento')
-                                                            <div
-                                                                class="fv-plugins-message-container invalid-feedback fs-7">
-                                                                {{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-md-4 fv-row">
-                                                        <label class="form-label">CPF</label>
-                                                        <input class="form-control" name="cpf"
-                                                            placeholder="000.000.000-00" 
-                                                data-inputmask="'mask': '999.999.999-99'" 
-                                                            value="{{ old('cpf') }}" />
-                                                        @error('cpf')
-                                                            <div
-                                                                class="fv-plugins-message-container invalid-feedback fs-7">
-                                                                {{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="fv-row">
-                                                    <label class="form-label">Causa da Morte</label>
-                                                    <input type="text" class="form-control mb-2"
-                                                        name="causa_morte" placeholder="Descreva a causa da morte"
-                                                        value="{{ old('causa_morte') }}">
-                                                    @error('causa_morte')
-                                                        <div class="fv-plugins-message-container invalid-feedback fs-7">
-                                                            {{ $message }}</div>
-                                                    @enderror
-                                                </div>
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h2>Informações Gerais</h2>
                                             </div>
                                         </div>
-                                        <!--end::Card body-->
+                                        <div class="card-body pt-0">
+                                            <div class="mb-10 fv-row">
+                                                <label class="required form-label">Nome Completo do
+                                                    Falecido</label>
+                                                <input type="text" class="form-control mb-2" name="nome_completo"
+                                                    placeholder="Nome e Sobrenome"
+                                                    value="{{ old('nome_completo') }}" />
+                                                @error('nome_completo')
+                                                    <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                        {{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="mb-10">
+                                                <label class="form-label">Descrição / Biografia</label>
+                                                <textarea class="form-control" name="descricao" rows="4"
+                                                    placeholder="Uma breve biografia ou detalhes importantes">{{ old('descricao') }}</textarea>
+                                            </div>
+
+                                            <div class="row g-9 mb-10">
+                                                <div class="col-md-4 fv-row">
+                                                    <label class="form-label">Data de Nascimento</label>
+                                                    <input class="form-control" name="data_nascimento"
+                                                        placeholder="Selecione a data" id="kt_datepicker_nascimento"
+                                                        value="{{ old('data_nascimento') }}" />
+                                                    @error('data_nascimento')
+                                                        <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                            {{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4 fv-row">
+                                                    <label class=" form-label">Data de Falecimento</label>
+                                                    <input class="form-control" name="data_falecimento"
+                                                        placeholder="Selecione a data" id="kt_datepicker_falecimento"
+                                                        value="{{ old('data_falecimento') }}" />
+                                                    @error('data_falecimento')
+                                                        <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                            {{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4 fv-row">
+                                                    <label class="form-label">CPF</label>
+                                                    <input class="form-control" name="cpf"
+                                                        placeholder="000.000.000-00"
+                                                        data-inputmask="'mask': '999.999.999-99'"
+                                                        value="{{ old('cpf') }}" />
+                                                    @error('cpf')
+                                                        <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                            {{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="fv-row">
+                                                <label class="form-label">Causa da Morte</label>
+                                                <input type="text" class="form-control mb-2" name="causa_morte"
+                                                    placeholder="Descreva a causa da morte"
+                                                    value="{{ old('causa_morte') }}">
+                                                @error('causa_morte')
+                                                    <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                        {{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Card body-->
                                     <!--end::General options-->
 
                                 </div>
@@ -316,9 +311,9 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-6 fv-row">
-                                            <label class="required form-label">Data do Sepultamento</label>
+                                            <label class="form-label">Data do Sepultamento</label>
                                             <input class="form-control" itemid="" name="data_sepultamento"
-                                                placeholder="Selecione a data"  id="kt_datepicker_sepultamento"
+                                                placeholder="Selecione a data" id="kt_datepicker_sepultamento"
                                                 value="{{ old('data_sepultamento') }}" />
                                             @error('data_sepultamento')
                                                 <div class="fv-plugins-message-container invalid-feedback fs-7">
@@ -326,21 +321,32 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="mb-10 fv-row">
-                                        <label class="form-label">Nome do Responsável</label>
-                                        <input type="text" class="form-control mb-2"
-                                            placeholder="Nome completo do familiar responsável"
-                                            name="nome_responsavel" value="{{ old('nome_responsavel') }}" />
-                                        @error('nome_responsavel')
-                                            <div class="fv-plugins-message-container invalid-feedback fs-7">
-                                                {{ $message }}</div>
-                                        @enderror
+                                    <div class="row g-9 mb-10">
+                                        <div class="col-md-5 fv-row">
+                                            <label class="form-label">Nome do Responsável</label>
+                                            <input type="text" class="form-control mb-2"
+                                                placeholder="Nome completo do familiar responsável"
+                                                name="nome_responsavel" value="{{ old('nome_responsavel') }}" />
+                                            @error('nome_responsavel')
+                                                <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                    {{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-7 fv-row">
+                                            <label class="form-label">Endereço do Responsável</label>
+                                            <input type="text" class="form-control mb-2" name="endereco_responsavel"
+                                                placeholder="Descreva a causa da morte"
+                                                value="{{ old('endereco_responsavel') }}">
+                                            @error('endereco_responsavel')
+                                                <div class="fv-plugins-message-container invalid-feedback fs-7">
+                                                    {{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-
                                     <!--end::Input group-->
                                     <div class="row g-5 mb-10">
                                         <div class="col-md-6 fv-row">
-                                            <label class="required form-label">E-mail</label>
+                                            <label class="form-label">E-mail</label>
                                             <input type="email" name="email" class="form-control"
                                                 placeholder="Digite o e-mail" />
                                             @error('email')
@@ -350,7 +356,7 @@
 
                                         </div>
                                         <div class="col-md-6 fv-row">
-                                            <label class="required form-label">Telefone</label>
+                                            <label class="form-label">Telefone</label>
                                             <input type="tel" name="telefone_responsavel" class="form-control"
                                                 placeholder="Digite o telefone"
                                                 data-inputmask="'mask': '(99) 9.9999-9999'" />
@@ -426,7 +432,7 @@
             </div>
             <!--end::Content wrapper-->
             <!--begin::Footer-->
-                @include('layouts.footer')
+            @include('layouts.footer')
             <!--end::Footer-->
         </div>
         <!--end:::Main-->
@@ -453,43 +459,42 @@
 <script src="/assets/js/widgets.bundle.js"></script>
 <script src="/assets/js/custom/widgets.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const datepickerOptions = {
-        altInput: true,
-        altFormat: "d/m/Y",
-        dateFormat: "Y-m-d",
-        allowInput: true,
-        // locale: "pt", // Se você quiser ativar a localização
-    };
+    document.addEventListener('DOMContentLoaded', function() {
+        const datepickerOptions = {
+            altInput: true,
+            altFormat: "d/m/Y",
+            dateFormat: "Y-m-d",
+            allowInput: true,
+            // locale: "pt", // Se você quiser ativar a localização
+        };
 
-    const nascimentoPickerEl = document.querySelector("#kt_datepicker_nascimento");
-    const falecimentoPickerEl = document.querySelector("#kt_datepicker_falecimento");
-    const sepultamentoPickerEl = document.querySelector("#kt_datepicker_sepultamento");
+        const nascimentoPickerEl = document.querySelector("#kt_datepicker_nascimento");
+        const falecimentoPickerEl = document.querySelector("#kt_datepicker_falecimento");
+        const sepultamentoPickerEl = document.querySelector("#kt_datepicker_sepultamento");
 
-    if (nascimentoPickerEl && falecimentoPickerEl && sepultamentoPickerEl) {
-        nascimentoPickerEl.flatpickr(datepickerOptions);
-        falecimentoPickerEl.flatpickr(datepickerOptions);
-        sepultamentoPickerEl.flatpickr(datepickerOptions);
+        if (nascimentoPickerEl && falecimentoPickerEl && sepultamentoPickerEl) {
+            nascimentoPickerEl.flatpickr(datepickerOptions);
+            falecimentoPickerEl.flatpickr(datepickerOptions);
+            sepultamentoPickerEl.flatpickr(datepickerOptions);
 
-        const nascimentoPicker = nascimentoPickerEl._flatpickr;
-        const falecimentoPicker = falecimentoPickerEl._flatpickr;
-        const sepultamentoPicker = sepultamentoPickerEl._flatpickr;
+            const nascimentoPicker = nascimentoPickerEl._flatpickr;
+            const falecimentoPicker = falecimentoPickerEl._flatpickr;
+            const sepultamentoPicker = sepultamentoPickerEl._flatpickr;
 
-        // Aplica a máscara apenas no campo "altInput", que é o visível ao usuário
-        Inputmask("99/99/9999").mask(nascimentoPicker.altInput);
-        Inputmask("99/99/9999").mask(falecimentoPicker.altInput);
-        Inputmask("99/99/9999").mask(sepultamentoPicker.altInput);
+            // Aplica a máscara apenas no campo "altInput", que é o visível ao usuário
+            Inputmask("99/99/9999").mask(nascimentoPicker.altInput);
+            Inputmask("99/99/9999").mask(falecimentoPicker.altInput);
+            Inputmask("99/99/9999").mask(sepultamentoPicker.altInput);
 
-        // Lógica para interligar datas
-        nascimentoPicker.config.onChange.push(function (selectedDates, dateStr) {
-            falecimentoPicker.set('minDate', dateStr);
-        });
+            // Lógica para interligar datas
+            nascimentoPicker.config.onChange.push(function(selectedDates, dateStr) {
+                falecimentoPicker.set('minDate', dateStr);
+            });
 
-        falecimentoPicker.config.onChange.push(function (selectedDates, dateStr) {
-            sepultamentoPicker.set('minDate', dateStr);
-        });
-    }
-});
-
+            falecimentoPicker.config.onChange.push(function(selectedDates, dateStr) {
+                sepultamentoPicker.set('minDate', dateStr);
+            });
+        }
+    });
 </script>
 <!--end::Custom Javascript-->

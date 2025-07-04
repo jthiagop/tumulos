@@ -30,6 +30,7 @@ class PessoaFalecida extends Model
         'tags',
         'nome_responsavel',
         'telefone_responsavel',
+        'endereco_responsavel',
         'email',
     ];
 
@@ -42,6 +43,7 @@ class PessoaFalecida extends Model
         'tags' => 'array', // Converte a coluna JSON 'tags' em array e vice-versa
         'data_nascimento' => 'date', // Garante que seja um objeto Carbon
         'data_falecimento' => 'date', // Garante que seja um objeto Carbon
+        'data_sepultamento' => 'date',
     ];
 
     public function tumulo()

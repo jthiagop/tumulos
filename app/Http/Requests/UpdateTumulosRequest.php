@@ -34,6 +34,7 @@ class UpdateTumulosRequest extends FormRequest
             ],
             'status' => 'required|string|in:Disponível,Ocupado,Reservado,Em Manutenção',
             'tags' => 'nullable|string',
+            'local' => 'nullable|string',
         ];
     }
 
